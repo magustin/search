@@ -1,3 +1,5 @@
+
+/*
 export interface SearchProducts {
 
     id: number,
@@ -9,7 +11,7 @@ export interface SearchProducts {
     award_date: string,
     is_valid: boolean
 }
-
+*/
 
 // PRODUCT MODEL
 export class Product {

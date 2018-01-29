@@ -1,7 +1,7 @@
 
 import { Pipe, PipeTransform } from '@angular/core';
 
-import { SearchProducts } from '../product';
+import { Product } from '../product';
 
 import * as _ from 'lodash';
 
@@ -12,46 +12,78 @@ import * as _ from 'lodash';
 
 export class SearchPipe implements PipeTransform {
 
-    transform(wildcardProductProps: SearchProducts[], productProp: any): any {
+    transform(allProducts: Product[], strUserInput: any): any {
 
-        let keyArr: any[] = Object.keys(wildcardProductProps),
-        value: any = Object,
+        let arrKey: any[] = Object.keys(allProducts),
+
+        objProduct: any = Object,
+        
         arrProps: any[] = [],
-        val: any,
-        propVal: any[] = [],
+        
+        prop: any,
+        
+        arrProductProps: any[] = [],
 
-        propValToString: string = "",
+        strProductProps: string = "",
 
         regExResult: any[] = [],
 
-        regEx: RegExp =  new RegExp(productProp, "gi");
+        regExResult2: number,
 
-        keyArr.forEach((key: any) => {
+        regEx: RegExp =  new RegExp(strUserInput, "gi"),
 
-            value = wildcardProductProps[key];
-            //console.log('value: ' + value);
+        regEx2: RegExp =  new RegExp(/^\s*$/, "g");
 
-            propVal = _.map(value);
-            //console.log('propVal: ' + propVal);
+        arrKey.forEach((key: any) => {
 
-            for(val in propVal) {
+            objProduct = allProducts[key];
+            //console.log('objProduct: ' + objProduct);
 
-                //console.log('propVal item: ' + propVal[val]);
+            arrProductProps = _.map(objProduct);
+            //console.log('arrProductProps: ' + arrProductProps);
 
-                propValToString = _.toString(propVal[val]);
-                regExResult = propValToString.match(regEx);
+            for(prop in arrProductProps) {
 
-                console.log('regEx: ' + regEx);
-                console.log('regEx result: ' + regExResult);
+                strProductProps = _.toString(arrProductProps[prop]);
+                regExResult = strProductProps.match(regEx);
 
-                if(_.toString(regExResult) === productProp || _.lowerCase(_.toString(regExResult)) === _.lowerCase(productProp)) {
+                //console.log('arrProductProps item: ' + arrProductProps[prop]);
+                //console.log('regEx: ' + regEx);
+                //console.log('regEx result: ' + regExResult);
+                //console.log('product prop: ' + strUserInput);
+
+                if(_.toString(regExResult) === strUserInput || _.lowerCase(_.toString(regExResult)) === _.lowerCase(strUserInput)) {
                     
-                    arrProps.push(value);
+                    arrProps.push(objProduct);
                     //console.log('Property array: ' + arrProps.length);
                 }
             }
         });
 
-        return arrProps;
+        regExResult2 = strUserInput.search(regEx2);
+        //console.log("regExResult2: " + regExResult2);
+
+        if(regExResult2 == 0) {
+
+            return [-1];
+        }
+
+        //console.log('array length: ' + arrProps.length);
+        //return arrProps;
+
+        if(arrProps.length > 0) {
+
+            //console.log("array returned");
+            return arrProps;
+        }
+        
+        if(arrProps.length == 0) {
+            
+            //console.log("nothing returned");
+            //console.log("array length: " + arrProps.length);
+
+            //return arrProps;
+            return [-1];
+        }
     }
 }

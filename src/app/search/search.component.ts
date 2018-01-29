@@ -14,7 +14,7 @@ import { Product } from '../product';
 
 export class SearchComponent {
 
-     products: any[] = [];
+    products: any[] = [];
 
     theSelectedProduct: Product;
 

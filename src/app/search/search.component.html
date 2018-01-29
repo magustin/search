@@ -4,11 +4,12 @@
     <div *ngIf="search">
         <input #box placeholder="Search Products" (keyup.enter)="update(box.value)" (blur)="update(box.value)">
     </div>
-
+    
     <div class="search-results" *ngIf="filteredProductWildcard">
-        <h2>Search results for {{title}}</h2>
+        <h2>You searched for: {{title}}</h2>
         <div *ngFor="let product of (products | wildcardProductSearch : filteredProductWildcard)" (click)="onSelect(product)" class="product-line-item">
-            <ul>
+            <p *ngIf="product === -1">No results.</p>
+            <ul *ngIf="product !== -1">
                 <li>ID: {{product.id}}</li>
                 <li>Status: {{product.status}}</li>
                 <li>Type: {{product.type}}</li>
