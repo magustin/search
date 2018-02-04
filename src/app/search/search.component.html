@@ -1,15 +1,13 @@
 
 <div class="search-component">
-
     <div *ngIf="search">
         <input #box placeholder="Search Products" (keyup.enter)="update(box.value)" (blur)="update(box.value)">
     </div>
-    
-    <div class="search-results" *ngIf="filteredProductWildcard">
+    <div class="search-results" *ngIf="productSearchInput">
         <h2>You searched for: {{title}}</h2>
-        <div *ngFor="let product of (products | wildcardProductSearch : filteredProductWildcard)" (click)="onSelect(product)" class="product-line-item">
+        <div *ngFor="let product of (products | productSearch : productSearchInput)" class="product-line-item">
             <p *ngIf="product === -1">No results.</p>
-            <ul *ngIf="product !== -1">
+            <ul *ngIf="product !== -1" (click)="onSelect(product)">
                 <li>ID: {{product.id}}</li>
                 <li>Status: {{product.status}}</li>
                 <li>Type: {{product.type}}</li>
@@ -21,12 +19,8 @@
             </ul>
         </div>
     </div>
-
     <div class="item-detail" *ngIf="showProductDetails">
-
         <button (click)="searchProductType()">New Search</button>
-        <!--<button (click)="editDetails()">Edit Details</button>-->
-
         <h3>Details for Product {{theSelectedProduct.id}}</h3>
         Status: {{theSelectedProduct.status}} <br />
         Type: {{theSelectedProduct.type}} <br />
@@ -34,29 +28,5 @@
         Sales Person: {{theSelectedProduct.sales_person}} <br />
         Award Date: {{theSelectedProduct.award_date}} <br />
         Active Product: {{activeProduct}}<br />
-
-        <div *ngIf="showEditDetails" class="modify-product">
-            <h3>Modify Details</h3>
-            <label>Id:</label>
-            <input [(ngModel)]="theSelectedProduct.id" placeholder="Id"/>
-
-            <label>Status:</label>
-            <input [(ngModel)]="theSelectedProduct.status" placeholder="Status"/>
-
-            <label>Type:</label>
-            <input [(ngModel)]="theSelectedProduct.type" placeholder="Type"/>
-
-            <label>Quantity:</label>
-            <input [(ngModel)]="theSelectedProduct.quantity" placeholder="Quantity"/>
-
-            <label>Sales Person:</label>
-            <input [(ngModel)]="theSelectedProduct.sales_person" placeholder="Sales Person"/>
-
-            <label>Award Date:</label>
-            <input [(ngModel)]="theSelectedProduct.award_date" placeholder="Award Date"/>
-
-            <label>Active Product:</label>
-            <input [(ngModel)]="activeProduct" placeholder="Active Product"/>
-        <div>
     </div>
 </div>

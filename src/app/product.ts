@@ -1,18 +1,4 @@
 
-/*
-export interface SearchProducts {
-
-    id: number,
-    status: string,
-    type: string,
-    customer: string,
-    quantity: number,
-    sales_person: string,
-    award_date: string,
-    is_valid: boolean
-}
-*/
-
 // PRODUCT MODEL
 export class Product {
 

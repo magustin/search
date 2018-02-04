@@ -7,7 +7,7 @@ import * as _ from 'lodash';
 
 @Pipe({
 
-    name: 'wildcardProductSearch'
+    name: 'productSearch'
 })
 
 export class SearchPipe implements PipeTransform {
@@ -15,74 +15,60 @@ export class SearchPipe implements PipeTransform {
     transform(allProducts: Product[], strUserInput: any): any {
 
         let arrKey: any[] = Object.keys(allProducts),
-
         objProduct: any = Object,
-        
         arrProps: any[] = [],
-        
-        prop: any,
-        
         arrProductProps: any[] = [],
-
-        strProductProps: string = "",
-
         regExResult: any[] = [],
+        strProductProps: string = "",
+        strTrimPreWhitespace: string = "",
+        prop: any,
+        regEx: RegExp;
 
-        regExResult2: number,
+        // CATCH SPACES INITIALLY ENTERED AND REPLACE WITH ''
+        
+        //strTrimPreWhitespace = strUserInput.replace(/(^\s*$)/g, '');
+         strTrimPreWhitespace = strUserInput.replace(/(^\s*$|[^\w\d\s.\/,\s\w])/gi, '');
 
-        regEx: RegExp =  new RegExp(strUserInput, "gi"),
+        // CONSTRUCTOR THAT GENERATES THE REGEX CODE
+        regEx = new RegExp(strTrimPreWhitespace, "gi");
 
-        regEx2: RegExp =  new RegExp(/^\s*$/, "g");
+        console.log("regEx: " + regEx);
 
+        // LOOP THROUGH PRODUCTS
         arrKey.forEach((key: any) => {
 
             objProduct = allProducts[key];
-            //console.log('objProduct: ' + objProduct);
-
             arrProductProps = _.map(objProduct);
-            //console.log('arrProductProps: ' + arrProductProps);
 
-            for(prop in arrProductProps) {
+            // LOOP THROUGH PRODUCT PROPERTIES AND LOOK FOR STRING MATCHES WITH USER INPUT
+            //for(prop in arrProductProps) {
+            for(prop = 1; prop <= arrProductProps.length; prop++){
 
                 strProductProps = _.toString(arrProductProps[prop]);
                 regExResult = strProductProps.match(regEx);
 
-                //console.log('arrProductProps item: ' + arrProductProps[prop]);
-                //console.log('regEx: ' + regEx);
-                //console.log('regEx result: ' + regExResult);
-                //console.log('product prop: ' + strUserInput);
-
                 if(_.toString(regExResult) === strUserInput || _.lowerCase(_.toString(regExResult)) === _.lowerCase(strUserInput)) {
                     
                     arrProps.push(objProduct);
-                    //console.log('Property array: ' + arrProps.length);
                 }
             }
         });
 
-        regExResult2 = strUserInput.search(regEx2);
-        //console.log("regExResult2: " + regExResult2);
-
-        if(regExResult2 == 0) {
+        // RETURN EMPTY ARRAY IF SPACES WERE INITIALLY ENTERED
+        if(strTrimPreWhitespace === '') {
 
             return [-1];
         }
 
-        //console.log('array length: ' + arrProps.length);
-        //return arrProps;
-
+        // RETURN PRODUCTS
         if(arrProps.length > 0) {
 
-            //console.log("array returned");
             return arrProps;
         }
         
+        // NO MATCH
         if(arrProps.length == 0) {
             
-            //console.log("nothing returned");
-            //console.log("array length: " + arrProps.length);
-
-            //return arrProps;
             return [-1];
         }
     }

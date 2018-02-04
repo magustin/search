@@ -1,8 +1,6 @@
 
 import { Component } from '@angular/core';
-
 import { ProductService } from '../services/product.service';
-
 import { Product } from '../product';
 
 @Component({
@@ -15,22 +13,14 @@ import { Product } from '../product';
 export class SearchComponent {
 
     products: any[] = [];
-
     theSelectedProduct: Product;
-
     showProductDetails: boolean = false;
-
     search: boolean = true;
-
-    showEditDetails: boolean = false;
-
     title: string = "";
-
     filteredProductType: string = "";
     filteredProductStatus: string = "";
     filteredProductCustomer: string = "";
-    filteredProductWildcard: string = "";
-
+    productSearchInput: string = "";
     activeProduct: string = "";
 
     constructor(ProductService: ProductService) {
@@ -40,14 +30,7 @@ export class SearchComponent {
     
     update(value:string) {
 
-        // CONVERT TO LOWERCASE
-        //this.filteredProductType = _.lowerCase(value);
-        //this.filteredProductWildcard = _.lowerCase(value);
-
-        this.filteredProductWildcard = value;
-
-        // DRESSUP TITLE BY CAPITALIZING FIRST WORD    
-        //this.title = _.capitalize(value);
+        this.productSearchInput = value;
         this.title = value;
     }
 
@@ -55,8 +38,6 @@ export class SearchComponent {
 
         this.showProductDetails = true;
         this.theSelectedProduct = product;
-        //this.filteredProductType = "";
-        //this.filteredProductWildcard = "";
         this.search = false;
         this.activeProduct = this.theSelectedProduct.is_valid ? "Yes" : "No";
     }
@@ -64,13 +45,7 @@ export class SearchComponent {
     searchProductType() {
 
         this.showProductDetails = false;
-        this.showEditDetails = false;
         this.search = true;
-        this.filteredProductWildcard = "";
-    }
-
-    editDetails() {
-
-        this.showEditDetails = true;
+        this.productSearchInput = "";
     }
 }
