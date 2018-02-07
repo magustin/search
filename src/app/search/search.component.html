@@ -1,32 +1,30 @@
 
 <div class="search-component">
-    <div *ngIf="search">
+    <div class="textbox-wrap" *ngIf="search">
         <input #box placeholder="Search Products" (keyup.enter)="update(box.value)" (blur)="update(box.value)">
     </div>
     <div class="search-results" *ngIf="productSearchInput">
         <h2>You searched for: {{title}}</h2>
-        <div *ngFor="let product of (products | productSearch : productSearchInput)" class="product-line-item">
-            <p *ngIf="product === -1">No results.</p>
-            <ul *ngIf="product !== -1" (click)="onSelect(product)">
-                <li>ID: {{product.id}}</li>
-                <li>Status: {{product.status}}</li>
-                <li>Type: {{product.type}}</li>
-                <li>Customer: {{product.customer}}</li>
-                <li>Quantity: {{product.quantity}}</li>
-                <li>Salesperson: {{product.sales_person}}</li>
-                <li>Award Date: {{product.award_date}}</li>
-                <li>Active Product: {{product.is_valid}}</li>
+        <div class="product-line-item" *ngFor="let product of (products | productSearch : productSearchInput)">
+            <p *ngIf="product === -1">No results found.</p>
+            <ul class="item-master" *ngIf="product !== -1" (click)="onSelect(product)">
+                <li>{{product.name}}</li>
+                <li>${{product.price}}</li>
+                
             </ul>
         </div>
     </div>
     <div class="item-detail" *ngIf="showProductDetails">
         <button (click)="searchProductType()">New Search</button>
-        <h3>Details for Product {{theSelectedProduct.id}}</h3>
-        Status: {{theSelectedProduct.status}} <br />
-        Type: {{theSelectedProduct.type}} <br />
-        Quantity: {{theSelectedProduct.quantity}} <br />
-        Sales Person: {{theSelectedProduct.sales_person}} <br />
-        Award Date: {{theSelectedProduct.award_date}} <br />
-        Active Product: {{activeProduct}}<br />
+        <h3>Details for {{theSelectedProduct.name}}</h3>
+        <ul>
+            <li>Product ID: {{theSelectedProduct.id}}</li>
+            <li>Name: {{theSelectedProduct.name}}</li>
+            <li>Type: {{theSelectedProduct.type}}</li>
+            <li>Status: {{theSelectedProduct.status}}</li>
+            <li>Price: ${{theSelectedProduct.price}}</li>
+            <li>Product Description: {{theSelectedProduct.description}}</li>
+            <li>Active Product: {{activeProduct}}</li>
+        </ul>
     </div>
 </div>

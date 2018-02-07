@@ -1,8 +1,5 @@
-
 import { Pipe, PipeTransform } from '@angular/core';
-
 import { Product } from '../product';
-
 import * as _ from 'lodash';
 
 @Pipe({
@@ -24,15 +21,10 @@ export class SearchPipe implements PipeTransform {
         prop: any,
         regEx: RegExp;
 
-        // CATCH SPACES INITIALLY ENTERED AND REPLACE WITH ''
-        
-        //strTrimPreWhitespace = strUserInput.replace(/(^\s*$)/g, '');
-         strTrimPreWhitespace = strUserInput.replace(/(^\s*$|[^\w\d\s.\/,\s\w])/gi, '');
+        strTrimPreWhitespace = strUserInput.replace(/(^\s*$|[^\w\d\s.\/,\s\w]|_)/gi, '');
 
-        // CONSTRUCTOR THAT GENERATES THE REGEX CODE
-        regEx = new RegExp(strTrimPreWhitespace, "gi");
-
-        console.log("regEx: " + regEx);
+        // CONSTRUCTOR
+regEx = new RegExp(strTrimPreWhitespace, "gi");
 
         // LOOP THROUGH PRODUCTS
         arrKey.forEach((key: any) => {
@@ -41,7 +33,6 @@ export class SearchPipe implements PipeTransform {
             arrProductProps = _.map(objProduct);
 
             // LOOP THROUGH PRODUCT PROPERTIES AND LOOK FOR STRING MATCHES WITH USER INPUT
-            //for(prop in arrProductProps) {
             for(prop = 1; prop <= arrProductProps.length; prop++){
 
                 strProductProps = _.toString(arrProductProps[prop]);

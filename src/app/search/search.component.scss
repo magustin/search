@@ -1,9 +1,156 @@
-%test {
-    
-    border: 2px solid red;
+
+// COLORS
+$white: hsl(0, 0%, 100%);
+$medium-gray: hsl(0, 0%, 85%);
+$dark-med-gray: hsl(0, 0%, 75%);
+$dark-gray: hsl(0, 0%, 50%);
+$bright-blue: hsl(192, 82%, 70%);
+$dull-blue: hsl(192, 82%, 40%);
+$deep-blue: hsl(192, 82%, 30%);
+
+// TEXT SIZE
+$base-text: 16px;
+$medium-text: 1.125em;
+$mid-large-text: 1.5em;
+$large-text: 1.875em;
+
+%panel {
+	
+	width: 100%;
+	margin: 0;
+	padding: 20px;
+    background-color: $medium-gray;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    box-sizing: border-box;
+}
+
+%type {
+
+	font-family: sans-serif;
+	font-style: normal;
+	font-weight: normal;
+	font-family: sans-serif;	
+}
+
+ h2 {
+
+ 	@extend %type; 
+ 	width: 100%;
+ 	text-align: center;
+ 	font-size: $large-text;
+ }
+
+h3 {
+
+	@extend %type; 
+ 	width: 100%;
+ 	text-align: center;
+ 	font-size: $mid-large-text;
+}
+
+.hint {
+
+	transform:rotate(-180deg);
+	color: $dark-med-gray;
+}
+
+.textbox-wrap {
+
+	@extend %panel;
+	input {
+
+    	width: 50%;
+    	margin: 0;
+    	padding: 0 5px;
+    	height: 30px;
+    	border: 1px solid $dark-gray;
+    	font-size: $medium-text;
+    }
 }
 
 .search-component {
     
-    @extend %test;
+    @extend %panel;
+    @extend %type;
+    font-size: $base-text;
+}
+
+.product-line-item {
+
+	@extend %panel;
+	margin: 10px;
+	background-color: $white;
+}
+
+.search-results {
+
+	 @extend %panel;
+	 flex-direction: row;
+	 background-color: $dark-med-gray;
+}
+
+.item-detail {
+
+	 @extend %panel;
+}
+
+ul {
+
+	padding: 0;
+	list-style: none;
+	line-height: 1.5;
+
+	li {
+
+		font-size: $medium-text;
+	}
+}
+
+ul.item-master {
+
+	li {
+
+		cursor: pointer;
+	}
+}
+
+button {
+
+	padding: 12px 24px;
+	border-radius: 3px;
+	cursor: pointer;
+	background-color: $deep-blue;
+	box-shadow: none;
+	border: 0;
+	font-size: $medium-text;
+	color: $white;
+	
+	&:hover {
+
+		background-color: $dull-blue;
+		color: #fff;
+	}
+}
+
+// 320px AND BELOW
+@media(max-width: 320px) {
+
+	.product-line-item {
+
+		width: 100%;
+	}
+}
+
+// 768px AND BELOW
+@media(min-width: 768px) {
+
+	.product-line-item {
+		
+		width: 25%;
+	}
 }
